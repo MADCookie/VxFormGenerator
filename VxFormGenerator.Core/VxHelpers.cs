@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace VxFormGenerator.Core
@@ -26,6 +27,13 @@ namespace VxFormGenerator.Core
                 return IsTypeDerivedFromGenericType(typeToCheck.BaseType, genericType);
             }
         }
+
+        internal static IEnumerable<PropertyInfo> GetAllProperties(Type modelType)
+        {
+            return modelType.GetProperties()
+                     .Where(w => w.GetCustomAttribute<VxIgnoreAttribute>() == null);
+        }
+
         public static bool TypeImplementsInterface(Type type, Type typeToImplement)
         {
             Type foundInterface = type

@@ -1,4 +1,4 @@
-﻿@page "/model-form"
+﻿@page "/definition-form"
 
 @using VxFormGenerator.Core
 @using VxFormGeneratorDemoData
@@ -23,8 +23,8 @@
     /// <summary>
     /// Model that is used for the form
     /// </summary>
-    private FeedingSession Model = new FeedingSession();
-  
+    private OrderViewModel Model = new OrderViewModel();
+
 
     /// <summary>
     /// Will handle the submit action of the form
@@ -37,7 +37,7 @@
 
     private void HandleInValidSubmit(EditContext context)
     {
-        
+
 
     }
 

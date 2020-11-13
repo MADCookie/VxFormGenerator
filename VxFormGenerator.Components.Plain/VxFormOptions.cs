@@ -8,7 +8,7 @@ namespace VxFormGenerator.Settings.Plain
     public class VxFormOptions : IFormGeneratorOptions
     {
         public Type FormElementComponent { get; set; }
-        public FieldCssClassProvider FieldCssClassProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public FieldCssClassProvider FieldCssClassProvider { get; set; }
 
         public VxFormOptions()
         {

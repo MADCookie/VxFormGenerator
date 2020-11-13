@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VxFormGenerator.Core.Layout
 {
-    public class VxFormRow<TModel>
+    public class VxFormRow : Attribute
     {
 
         public string Label { get; set; }
@@ -13,7 +13,12 @@ namespace VxFormGenerator.Core.Layout
 
         public LabelPositions LabelPosition { get; set; }
 
-        public Array<VxFormColumn> { get; set; }
+        public List<VxFormColumn> Columns { get; set; }
 
-}
+        public VxFormRow(int rowId)
+        {
+            Id = rowId.ToString();
+        }
+
+    }
 }
