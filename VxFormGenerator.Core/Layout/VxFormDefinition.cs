@@ -18,9 +18,8 @@ namespace VxFormGenerator.Core.Layout
 
             foreach(var prop in allProperties)
             {
-                var isFormGroup = prop.GetCustomAttributes(typeof(VxFormGroup));
-                if(isFormGroup != null)                {
-                    
+                if(VxFormGroup.IsFormGroup(prop)) {
+                    var formGroup = VxFormGroup.CreateFromModel(prop.PropertyType);
                 }
                     
             }

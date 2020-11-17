@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using VxFormGenerator.Core.Layout;
 
 namespace VxFormGenerator.Core
 {
@@ -52,6 +53,9 @@ namespace VxFormGenerator.Core
             }
             else // Assume it's a regular class, could be tighter scoped
             {
+
+                var formDefinition = VxFormDefinition.CreateFromModel(modelType);
+
                 // Look over all the properties in the class. 
                 // TODO: Should have an option to be excluded from selection 
                 foreach (var propertyInfo in modelType.GetProperties().Where(w=> w.GetCustomAttribute<VxIgnoreAttribute>() == null))
