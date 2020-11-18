@@ -29,9 +29,10 @@ namespace VxFormGenerator.Core.Layout
 
             var allProperties = VxHelpers.GetAllProperties(typeToCheck);
 
-            var defaultGroup = new VxFormGroup();
+            var defaultGroup = VxFormGroup.Create();
 
-            foreach (var prop in allProperties) {
+            foreach (var prop in allProperties)
+            {
 
                 var formRowAttr = prop.GetCustomAttribute<VxFormRow>();
 
@@ -40,7 +41,8 @@ namespace VxFormGenerator.Core.Layout
                     if (defaultGroup.Rows.Contains(formRowAttr))
                     {
                         var foundRow = defaultGroup.Rows.Find(value => value.Id == formRowAttr.Id);
-                        foundRow.Columns
+                        var formColumn = VxFormColumn.CreateFromProperty(prop);
+                        foundRow.Columns.Add(formColumn);
                     }
                     else
                         defaultGroup.Rows.Add((VxFormRow)formRowAttr.Clone());
@@ -48,6 +50,11 @@ namespace VxFormGenerator.Core.Layout
             }
             return new VxFormGroup();
             // 
+        }
+
+        private static VxFormGroup Create()
+        {
+            return new VxFormGroup();
         }
     }
 }

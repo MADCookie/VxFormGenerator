@@ -4,12 +4,12 @@ using System.Text;
 
 namespace VxFormGenerator.Core.Layout
 {
-    public class VxFormRow : Attribute
+    public class VxFormRow : Attribute, ICloneable
     {
 
         public string Label { get; set; }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public LabelPositions LabelPosition { get; set; }
 
@@ -17,8 +17,12 @@ namespace VxFormGenerator.Core.Layout
 
         public VxFormRow(int rowId)
         {
-            Id = rowId.ToString();
+            Id = rowId;
         }
 
+        public object Clone()
+        {
+            return new VxFormRow(this.Id) { LabelPosition = this.LabelPosition, Label = this.Label, Columns = this.Columns };
+        }
     }
 }
