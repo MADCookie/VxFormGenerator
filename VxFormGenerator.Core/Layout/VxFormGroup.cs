@@ -6,7 +6,7 @@ using System.Text;
 namespace VxFormGenerator.Core.Layout
 {
 
-    public class VxFormGroup : Attribute
+    public class VxFormGroup
     {
 
         public string Label { get; set; }

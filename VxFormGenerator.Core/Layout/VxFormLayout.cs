@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VxFormGenerator.Core.Layout
 {
-    public class VxFormLayout: Attribute
+    public class VxFormLayoutAttribute : Attribute
     {
         public int ColSpan { get; set; }
 
@@ -14,6 +14,12 @@ namespace VxFormGenerator.Core.Layout
 
         public string Label { get; set; }
 
+        public int Order { get; set; }
+    }
+
+    public class VxFormGroupAttribute : Attribute
+    {
+        public string Label { get; set; }
         public int Order { get; set; }
     }
 }

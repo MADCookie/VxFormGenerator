@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VxFormGenerator.Core.Layout
 {
-    public class VxFormRow : Attribute, ICloneable
+    public class VxFormRow :  ICloneable
     {
 
         public string Label { get; set; }
