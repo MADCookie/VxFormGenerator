@@ -6,26 +6,46 @@ using System.Text;
 
 namespace VxFormGenerator.Core.Layout
 {
-    public class VxFormDefinition: Attribute
+    public class VxFormDefinition : Attribute
     {
-        public string Label { get; protected set; }
+        public string Name { get; set; }
 
-        protected List<VxFormGroup> Groups { get; set; } = new List<VxFormGroup>();
+        public List<VxFormGroup> Groups { get; protected set; } = new List<VxFormGroup>();
 
-        internal static VxFormDefinition CreateFromModel(Type modelType)
+        internal static VxFormDefinition CreateFromModel(object model)
         {
-            var allProperties = VxHelpers.GetAllProperties(modelType);
+            var allProperties = VxHelpers.GetModelProperties(model.GetType());
 
-            foreach(var prop in allProperties)
+            var rootFormDefinition = model.GetType().GetCustomAttribute<VxFormDefinition>();
+
+            if (rootFormDefinition == null)
+                rootFormDefinition = VxFormDefinition.Create();
+
+            var defaultGroup = VxFormGroup.Create();
+
+
+            foreach (var prop in allProperties)
             {
-                if(VxFormGroup.IsFormGroup(prop)) {
-                    var formGroup = VxFormGroup.CreateFromModel(prop.PropertyType);
+                if (VxFormGroup.IsFormGroup(prop))
+                {
+                    var nestedModel = prop.GetValue(model);
+                    var formGroup = VxFormGroup.CreateFromModel(nestedModel);
+                    rootFormDefinition.Groups.Add(formGroup);
                 }
-                    
+                else
+                {
+                    VxFormGroup.Add(prop, defaultGroup, model);
+                }
+
             }
+            rootFormDefinition.Groups.Add(defaultGroup);
 
+            return rootFormDefinition;
+        }
 
-            return null;
+        private static VxFormDefinition Create()
+        {
+            return new VxFormDefinition();
         }
     }
 }

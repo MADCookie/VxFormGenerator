@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VxFormGenerator.Core\VxFormGenerator.Core.csproj" />
+    <ProjectReference Include="..\VxFormGeneratorDemoData\VxFormGeneratorDemoData.csproj" />
   </ItemGroup>
 
 </Project>

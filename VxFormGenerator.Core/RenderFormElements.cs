@@ -33,7 +33,8 @@ namespace VxFormGenerator.Core
 
             // Check the type of the model
             var modelType = CascadedEditContext.Model.GetType();
-            
+            var formDefinition = VxFormDefinition.CreateFromModel(CascadedEditContext.Model);
+
             if (modelType == typeof(ExpandoObject))
             {
                 // Accesing a ExpandoObject requires to cast the model as a dictionary, so it's accesable by a key of type string
@@ -53,19 +54,23 @@ namespace VxFormGenerator.Core
             }
             else // Assume it's a regular class, could be tighter scoped
             {
-
-                var formDefinition = VxFormDefinition.CreateFromModel(modelType);
-
-                // Look over all the properties in the class. 
-                // TODO: Should have an option to be excluded from selection 
-                foreach (var propertyInfo in modelType.GetProperties().Where(w=> w.GetCustomAttribute<VxIgnoreAttribute>() == null))
+                foreach (var group in formDefinition.Groups)
                 {
-                    // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered
-                    MethodInfo method = typeof(RenderFormElements).GetMethod(nameof(RenderFormElements.CreateFormElementReferencePoco), BindingFlags.NonPublic | BindingFlags.Instance);
-                    MethodInfo genericMethod = method.MakeGenericMethod(propertyInfo.PropertyType);
-                    // Execute the method with the following parameters
-                    genericMethod.Invoke(this, new object[] { CascadedEditContext.Model, propertyInfo, builder });
+                    foreach (var row in group.Rows)
+                    {
+                        // Look over all the properties in the class. 
+                        // TODO: Should have an option to be excluded from selection 
+                        foreach (var column in row.Columns)
+                        {
+                            // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered
+                            MethodInfo method = typeof(RenderFormElements).GetMethod(nameof(RenderFormElements.CreateFormElementReferencePoco), BindingFlags.NonPublic | BindingFlags.Instance);
+                            MethodInfo genericMethod = method.MakeGenericMethod(column.Property.PropertyType);
+                            // Execute the method with the following parameters
+                            genericMethod.Invoke(this, new object[] { column.Model, column.Property, builder });
+                        }
+                    }
                 }
+
             }
         }
 
@@ -77,8 +82,8 @@ namespace VxFormGenerator.Core
 
         private void SetupFramework()
         {
-            if(FormGeneratorOptions.FormElementComponent != null)
-            CascadedEditContext.SetFieldCssClassProvider(FormGeneratorOptions.FieldCssClassProvider);
+            if (FormGeneratorOptions.FormElementComponent != null)
+                CascadedEditContext.SetFieldCssClassProvider(FormGeneratorOptions.FieldCssClassProvider);
         }
 
         /// <summary>
@@ -107,7 +112,8 @@ namespace VxFormGenerator.Core
             {
                 Value = (TValue)value,
                 ValueChanged = valueChanged,
-                Key = key
+                Key = key,
+                Model = model
             };
 
             var elementType = typeof(VxFormElementLoader<TValue>);
@@ -125,7 +131,7 @@ namespace VxFormGenerator.Core
                             CreateInferred(this, __value => propertyInfo.SetValue(model, __value),
 
                             (TValue)propertyInfo.GetValue(model))));
-   // Create an expression to set the ValueExpression-attribute.
+            // Create an expression to set the ValueExpression-attribute.
             var constant = Expression.Constant(model, model.GetType());
             var exp = Expression.Property(constant, propertyInfo.Name);
             var lamb = Expression.Lambda<Func<TValue>>(exp);
@@ -135,9 +141,10 @@ namespace VxFormGenerator.Core
                 Value = (TValue)propertyInfo.GetValue(model),
                 ValueChanged = valueChanged,
                 ValueExpression = lamb,
-                Key = propertyInfo.Name
+                Key = propertyInfo.Name,
+                Model = model
             };
-                     
+
 
             var elementType = typeof(VxFormElementLoader<TValue>);
 

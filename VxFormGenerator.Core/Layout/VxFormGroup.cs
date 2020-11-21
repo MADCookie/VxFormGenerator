@@ -13,46 +13,54 @@ namespace VxFormGenerator.Core.Layout
 
         public string Id { get; set; }
 
-        public List<VxFormRow> Rows { get; set; }
+        public List<VxFormRow> Rows { get; set; } = new List<VxFormRow>();
 
         internal static bool IsFormGroup(PropertyInfo propertyInfo)
         {
-            return propertyInfo.GetCustomAttributes(typeof(VxFormGroup), false) != null;
+            return propertyInfo.GetCustomAttribute<VxFormGroupAttribute>() != null;
         }
 
-        internal static VxFormGroup CreateFromModel(Type propertyType)
+        internal static VxFormGroup CreateFromModel(object modelInstance)
         {
-            var typeToCheck = propertyType;
+            var typeToCheck = modelInstance.GetType();
             // check for generics
-            if (propertyType.IsGenericType)
-                typeToCheck = propertyType.GetGenericTypeDefinition();
+            if (typeToCheck.IsGenericType)
+                typeToCheck = typeToCheck.GetGenericTypeDefinition();
 
-            var allProperties = VxHelpers.GetAllProperties(typeToCheck);
+            var allProperties = VxHelpers.GetModelProperties(typeToCheck);
 
-            var defaultGroup = VxFormGroup.Create();
+            var rootGroup = VxFormGroup.Create();
 
             foreach (var prop in allProperties)
             {
-
-                var formRowAttr = prop.GetCustomAttribute<VxFormRow>();
-
-                if (formRowAttr != null)
-                {
-                    if (defaultGroup.Rows.Contains(formRowAttr))
-                    {
-                        var foundRow = defaultGroup.Rows.Find(value => value.Id == formRowAttr.Id);
-                        var formColumn = VxFormColumn.CreateFromProperty(prop);
-                        foundRow.Columns.Add(formColumn);
-                    }
-                    else
-                        defaultGroup.Rows.Add((VxFormRow)formRowAttr.Clone());
-                }
+                VxFormGroup.Add(prop, rootGroup, modelInstance);
             }
-            return new VxFormGroup();
-            // 
+            return rootGroup;
         }
 
-        private static VxFormGroup Create()
+        internal static void Add(PropertyInfo prop, VxFormGroup group, object modelInstance)
+        {
+            var layoutAttr = prop.GetCustomAttribute<VxFormLayoutAttribute>();
+            var allRowLayoutAttributes = VxHelpers.GetAllAttributes<VxFormRowLayoutAttribute>(prop.DeclaringType);
+
+            // If no attribute is found use the name of the property
+            if (layoutAttr == null)
+                layoutAttr = new VxFormLayoutAttribute() { Name = prop.Name };
+
+            // Check if row already exists
+            var foundRow = group.Rows.Find(value => value.Id == layoutAttr.RowId.ToString());
+
+            if (foundRow == null)
+            {
+                foundRow = VxFormRow.Create(layoutAttr, allRowLayoutAttributes.Find(x => x.Id == layoutAttr.RowId));
+                group.Rows.Add(foundRow); ;
+            }
+
+            var formColumn = VxFormColumn.Create(prop, layoutAttr, modelInstance);
+            foundRow.Columns.Add(formColumn);
+        }
+
+        internal static VxFormGroup Create()
         {
             return new VxFormGroup();
         }

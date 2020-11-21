@@ -1,6 +1,7 @@
 using Bunit;
 using System;
 using VxFormGenerator.Core.Layout;
+using VxFormGeneratorDemoData;
 using Xunit;
 
 namespace VxFormGenerator.Core.Tests
@@ -8,9 +9,10 @@ namespace VxFormGenerator.Core.Tests
     public class VxHelpers
     {
         [Fact]
-        public void CheckIfPropertyTypeIsFormGroup()
+        public void CreateVxColumn()
         {
-            VxFormGroup.IsFormGroup(typeof(TValue));
+            var definition = VxFormDefinition.CreateFromModel(typeof(AddressViewModel));
+
         }
     }
 }

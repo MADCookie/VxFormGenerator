@@ -28,13 +28,15 @@ namespace VxFormGenerator.Core
             }
         }
 
-        internal static IEnumerable<PropertyInfo> GetAllProperties(Type modelType)
+        internal static IEnumerable<PropertyInfo> GetModelProperties(Type modelType)
         {
             return modelType.GetProperties()
                      .Where(w => w.GetCustomAttribute<VxIgnoreAttribute>() == null);
         }
 
-        public static bool TypeImplementsInterface(Type type, Type typeToImplement)
+        internal static List<T> GetAllAttributes<T>(Type modelType) where T : Attribute => modelType.GetCustomAttributes<T>().ToList();
+
+        internal static bool TypeImplementsInterface(Type type, Type typeToImplement)
         {
             Type foundInterface = type
                 .GetInterfaces()

@@ -73,6 +73,8 @@ namespace VxFormGenerator.Core
             // and is able to trace back to the model
             builder.AddAttribute(5, nameof(FormElementBase<TValue>.FieldIdentifier), ValueReference.Key);
 
+            builder.AddAttribute(6, nameof(FormElementBase<TValue>.Model), ValueReference.Model);
+
             builder.CloseComponent();
 
         }

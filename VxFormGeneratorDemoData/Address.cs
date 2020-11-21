@@ -4,24 +4,23 @@ using VxFormGenerator.Core.Layout;
 
 namespace VxFormGeneratorDemoData
 {
+    [VxFormRowLayout(Id=2, Name = "Adress")]
     public class AddressViewModel
     {
         [Display(Name = "Surname")]
-        [VxFormRow(1)]
+        [VxFormLayout(RowId = 1)]
         public string SurName { get; set; }
-        [VxFormRow(1)]
+        [VxFormLayout(RowId = 1)]
         [Display(Name = "Lastname")]
         public string LastName { get; set; }
 
 
         [Display(Name = "Street")]
-        [VxFormRow(2)]
-        [VxFormColumn(10)]
+        [VxFormLayout(RowId = 2, ColSpan = 10)]
         public string Street { get; set; }
 
         [Display(Name = "Number")]
-        [VxFormRow(2)]
-        [VxFormColumn(2)]
+        [VxFormLayout(RowId = 2, ColSpan = 2)]
         public string Number { get; set; }
 
         [Display(Name = "Country")]

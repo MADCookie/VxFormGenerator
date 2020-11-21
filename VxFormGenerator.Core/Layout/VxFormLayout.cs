@@ -12,14 +12,21 @@ namespace VxFormGenerator.Core.Layout
 
         public int RowId { get; set; }
 
-        public string Label { get; set; }
+        public string Name { get; set; }
 
         public int Order { get; set; }
     }
 
     public class VxFormGroupAttribute : Attribute
     {
-        public string Label { get; set; }
+        public string Name { get; set; }
         public int Order { get; set; }
+    }
+
+    public class VxFormRowLayoutAttribute : Attribute
+    {
+        public string Name { get; set; }
+        public int Order { get; set; }
+        public int Id { get; set; }
     }
 }

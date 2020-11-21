@@ -8,24 +8,34 @@ namespace VxFormGenerator.Core.Layout
     {
 
         public int ColSpan { get; set; }
-
+        public string Name { get; private set; }
+        public int Order { get; private set; }
         public PropertyInfo Property { get; set; }
+        public object Model { get; private set; }
 
-        public VxFormColumn(int colSpan, PropertyInfo prop)
+        public VxFormColumn(PropertyInfo prop)
         {
-            ColSpan = colSpan;
             Property = prop;
         }
 
-        internal static VxFormColumn CreateFromProperty(PropertyInfo prop)
+        public VxFormColumn(PropertyInfo prop, VxFormLayoutAttribute layoutAttr, object modelInstance)
         {
-            var columnAnnotation = prop.GetCustomAttribute<VxFormLayout>();
-            return columnAnnotation == null ? new VxFormColumn(0, prop) : new VxFormColumn(columnAnnotation.ColSpan, prop);
+            ColSpan = layoutAttr.ColSpan;
+            Name = layoutAttr.Name;
+            Order = layoutAttr.Order;
+
+            Property = prop;
+            Model = modelInstance;
         }
 
         public object Clone()
         {
-            return new VxFormColumn(this.ColSpan, this.Property);
+            return new VxFormColumn(this.Property) { ColSpan = this.ColSpan };
+        }
+
+        internal static VxFormColumn Create(PropertyInfo prop, VxFormLayoutAttribute layoutAttr, object modelInstance)
+        {
+            return new VxFormColumn(prop, layoutAttr, modelInstance);
         }
     }
 }

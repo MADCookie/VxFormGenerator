@@ -36,6 +36,8 @@ namespace VxFormGenerator.Core
         /// </summary>
         [Parameter] public string Id { get; set; }
 
+        [Parameter] public object Model { get; set; }
+
         /// <summary>
         /// Get the <see cref="EditForm.EditContext"/> instance. This instance will be used to fill out the values inputted by the user
         /// </summary>
@@ -50,7 +52,7 @@ namespace VxFormGenerator.Core
             get
             {
 
-                var modelType = CascadedEditContext.Model.GetType();
+                var modelType = Model.GetType();
 
                 if (modelType == typeof(ExpandoObject))
                 {
@@ -58,7 +60,7 @@ namespace VxFormGenerator.Core
                 }
                 else
                 {
-                    var dd = CascadedEditContext.Model
+                    var dd = Model
                     .GetType()
                     .GetProperty(FieldIdentifier)
                     .GetCustomAttributes(typeof(DisplayAttribute), false)
@@ -125,7 +127,7 @@ namespace VxFormGenerator.Core
             /*   // Activate the the Type so that the methods can be called
                var instance = Activator.CreateInstance(elementType);*/
 
-            this.CreateFormComponent(this, CascadedEditContext.Model, FieldIdentifier, builder, elementType);
+            this.CreateFormComponent(this, Model, FieldIdentifier, builder, elementType);
         };
 
         /// <summary>
@@ -158,7 +160,7 @@ namespace VxFormGenerator.Core
             // Set the class for the the formelement.
             builder.AddAttribute(treeIndex++, "class", GetDefaultFieldClasses(Activator.CreateInstance(elementType) as InputBase<TFormElement>));
 
-            CheckForInterfaceActions(this, CascadedEditContext.Model, fieldIdentifier, builder, treeIndex++, elementType);
+            CheckForInterfaceActions(this, Model, fieldIdentifier, builder, treeIndex++, elementType);
 
 
             builder.CloseComponent();

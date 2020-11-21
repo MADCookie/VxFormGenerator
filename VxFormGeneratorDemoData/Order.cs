@@ -8,9 +8,10 @@ namespace VxFormGeneratorDemoData
     public class OrderViewModel
     {
         [VxFormGroup]
-        public AddressViewModel Address { get; set; }
+        public AddressViewModel Address { get; set; } = new AddressViewModel();
+
         [VxFormGroup]
-        public AddressViewModel BillingAddress { get; set; }
+        public AddressViewModel BillingAddress { get; set; } = new AddressViewModel();
 
         [Display(Name = "State")]
         public string State { get; set; }
