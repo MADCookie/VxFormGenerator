@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Core.Tests", "VxFormGenerator.Core.Tests\VxFormGenerator.Core.Tests.csproj", "{73AE376A-E7AA-4C7B-972C-6CAD787364D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VxFormGeneratorDemoData", "VxFormGeneratorDemoData\VxFormGeneratorDemoData.csproj", "{17AC6DF2-4B77-4463-9EB8-D445A858C2F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGeneratorDemoData", "VxFormGeneratorDemoData\VxFormGeneratorDemoData.csproj", "{17AC6DF2-4B77-4463-9EB8-D445A858C2F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
