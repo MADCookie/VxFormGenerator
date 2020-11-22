@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using VxFormGenerator.Core.Layout;
+using VxFormGenerator.Core.Render;
 
 namespace VxFormGenerator.Core
 {
@@ -31,15 +32,13 @@ namespace VxFormGenerator.Core
         {
             base.BuildRenderTree(builder);
 
-            // Check the type of the model
-            var modelType = CascadedEditContext.Model.GetType();
             var formDefinition = VxFormDefinition.CreateFromModel(CascadedEditContext.Model);
 
 
             foreach (var group in formDefinition.Groups)
             {
-                builder.OpenComponent<Components.VxFormGroup>(0);
-                builder.AddAttribute(1, nameof(Components.VxFormGroup.FormGroupDefinition), group);
+                builder.OpenComponent(0, FormGeneratorOptions.FormGroupElement);
+                builder.AddAttribute(1, nameof(VxFormGroupBase.FormGroupDefinition), group);
                 builder.CloseComponent();
             }
 

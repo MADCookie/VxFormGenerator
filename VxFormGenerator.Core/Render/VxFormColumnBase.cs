@@ -9,9 +9,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VxFormGenerator.Core.Components
+namespace VxFormGenerator.Core.Render
 {
-    public class VxFormColumnComponent : OwningComponentBase
+    public class VxFormColumnBase : OwningComponentBase
     {
         [Parameter] public Layout.VxFormColumn FormColumnDefinition { get; set; }
 
@@ -28,7 +28,7 @@ namespace VxFormGenerator.Core.Components
                     var value = accessor[key];
 
                     // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered
-                    MethodInfo method = typeof(VxFormColumnComponent).GetMethod(nameof(VxFormColumnComponent.CreateFormElementReferenceExpando), BindingFlags.NonPublic | BindingFlags.Instance);
+                    MethodInfo method = typeof(VxFormColumnBase).GetMethod(nameof(VxFormColumnBase.CreateFormElementReferenceExpando), BindingFlags.NonPublic | BindingFlags.Instance);
                     MethodInfo genericMethod = method.MakeGenericMethod(value.GetType());
                     // Execute the method with the following parameters
                     genericMethod.Invoke(this, new object[] { accessor, key, builder });
@@ -37,7 +37,7 @@ namespace VxFormGenerator.Core.Components
             else // Assume it's a regular class, could be tighter scoped
             {
                 // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered
-                MethodInfo method = typeof(VxFormColumnComponent).GetMethod(nameof(VxFormColumnComponent.CreateFormElementReferencePoco), BindingFlags.NonPublic | BindingFlags.Instance);
+                MethodInfo method = typeof(VxFormColumnBase).GetMethod(nameof(VxFormColumnBase.CreateFormElementReferencePoco), BindingFlags.NonPublic | BindingFlags.Instance);
                 MethodInfo genericMethod = method.MakeGenericMethod(FormColumnDefinition.Property.PropertyType);
                 // Execute the method with the following parameters
                 genericMethod.Invoke(this, new object[] { FormColumnDefinition.Model, FormColumnDefinition.Property, builder });

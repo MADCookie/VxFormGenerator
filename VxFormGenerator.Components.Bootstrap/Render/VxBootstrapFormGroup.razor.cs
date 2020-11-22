@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using VxFormGenerator.Core.Layout;
 
-namespace VxFormGenerator.Core.Components
+namespace VxFormGenerator.Render.Bootstrap
 {
-    public class VxFormRowComponent: OwningComponentBase
+    public class VxBootstrapFormGroupComponent : OwningComponentBase
     {
-        [Parameter] public Layout.VxFormRow FormRowDefinition { get; set; }
+        [Parameter] public Core.Layout.VxFormGroup FormGroupDefinition { get; set; }
     }
 }
 

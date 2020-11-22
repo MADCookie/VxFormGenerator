@@ -1,0 +1,14 @@
+﻿@inherits VxFormGenerator.Render.Bootstrap.VxBootstrapFormRowComponent
+
+<div>
+    <label>@FormRowDefinition.Name</label>
+    <div>
+
+        @foreach (var column in FormRowDefinition.Columns)
+        {
+           <VxFormGenerator.Components.Bootstrap.Render.VxBootstrapFormColumn FormColumnDefinition="@column">
+
+           </VxFormGenerator.Components.Bootstrap.Render.VxBootstrapFormColumn>
+        }
+    </div>
+</div>

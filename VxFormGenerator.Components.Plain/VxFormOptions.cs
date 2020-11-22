@@ -9,6 +9,7 @@ namespace VxFormGenerator.Settings.Plain
     {
         public Type FormElementComponent { get; set; }
         public FieldCssClassProvider FieldCssClassProvider { get; set; }
+        public Type FormGroupElement { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public VxFormOptions()
         {
