@@ -17,6 +17,7 @@ namespace VxFormGeneratorDemoData
 
         [Display(Name = "Street")]
         [VxFormLayout(RowId = 2, ColSpan = 10)]
+        [MinLength(5)]
         public string Street { get; set; }
 
         [Display(Name = "Number")]
