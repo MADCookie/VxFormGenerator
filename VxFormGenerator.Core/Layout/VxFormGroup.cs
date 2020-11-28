@@ -56,7 +56,7 @@ namespace VxFormGenerator.Core.Layout
                 group.Rows.Add(foundRow); ;
             }
 
-            var formColumn = VxFormColumn.Create(prop, layoutAttr, modelInstance);
+            var formColumn = VxFormElementDefinition.Create(prop, layoutAttr, modelInstance);
             foundRow.Columns.Add(formColumn);
         }
 

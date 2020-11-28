@@ -13,7 +13,7 @@ namespace VxFormGenerator.Core.Render
 {
     public class VxFormColumnBase : OwningComponentBase
     {
-        [Parameter] public Layout.VxFormColumn FormColumnDefinition { get; set; }
+        [Parameter] public Layout.VxFormElementDefinition FormColumnDefinition { get; set; }
 
         public RenderFragment CreateFormElement() => builder =>
         {

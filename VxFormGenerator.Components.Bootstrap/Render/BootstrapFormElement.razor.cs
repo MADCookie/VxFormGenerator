@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using VxFormGenerator.Core;
 
-namespace VxFormGenerator.Form
+namespace VxFormGenerator.Render
 {
 
     public class BootstrapFormElementComponent<TFormElement> : FormElementBase<TFormElement>

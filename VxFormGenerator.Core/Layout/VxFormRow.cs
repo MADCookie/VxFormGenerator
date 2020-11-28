@@ -11,7 +11,7 @@ namespace VxFormGenerator.Core.Layout
 
         public string Id { get; set; }
 
-        public List<VxFormColumn> Columns { get; set; } = new List<VxFormColumn>();
+        public List<VxFormElementDefinition> Columns { get; set; } = new List<VxFormElementDefinition>();
 
         public VxFormRow(int rowId)
         {

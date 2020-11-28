@@ -1,4 +1,4 @@
-﻿@namespace VxFormGenerator.Form
+﻿@namespace VxFormGenerator.Render
 
 @typeparam TFormElement
 @inherits BootstrapFormElementComponent<TFormElement>
@@ -9,7 +9,7 @@
     {
         <label class="col-sm-3 col-form-label" for="@Id">@Label</label>
     }
-    <div class="col-sm-9 d-flex justify-content-center flex-column">
+    <div class="d-flex justify-content-center flex-column">
         @CreateComponent()
         
         <VxFormGenerator.Core.Validation.VxValidationMessage For="@ValueExpression" Class="form-text">

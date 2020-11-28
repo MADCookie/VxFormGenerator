@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace VxFormGenerator.Core.Layout
 {
-    public class VxFormColumn : ICloneable
+    public class VxFormElementDefinition : ICloneable
     {
 
         public int ColSpan { get; set; }
@@ -13,12 +13,12 @@ namespace VxFormGenerator.Core.Layout
         public PropertyInfo Property { get; set; }
         public object Model { get; private set; }
 
-        public VxFormColumn(PropertyInfo prop)
+        public VxFormElementDefinition(PropertyInfo prop)
         {
             Property = prop;
         }
 
-        public VxFormColumn(PropertyInfo prop, VxFormLayoutAttribute layoutAttr, object modelInstance)
+        public VxFormElementDefinition(PropertyInfo prop, VxFormLayoutAttribute layoutAttr, object modelInstance)
         {
             ColSpan = layoutAttr.ColSpan;
             Name = layoutAttr.Name;
@@ -30,12 +30,12 @@ namespace VxFormGenerator.Core.Layout
 
         public object Clone()
         {
-            return new VxFormColumn(this.Property) { ColSpan = this.ColSpan };
+            return new VxFormElementDefinition(this.Property) { ColSpan = this.ColSpan };
         }
 
-        internal static VxFormColumn Create(PropertyInfo prop, VxFormLayoutAttribute layoutAttr, object modelInstance)
+        internal static VxFormElementDefinition Create(PropertyInfo prop, VxFormLayoutAttribute layoutAttr, object modelInstance)
         {
-            return new VxFormColumn(prop, layoutAttr, modelInstance);
+            return new VxFormElementDefinition(prop, layoutAttr, modelInstance);
         }
     }
 }
