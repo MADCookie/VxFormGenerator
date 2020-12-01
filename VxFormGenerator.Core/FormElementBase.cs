@@ -8,6 +8,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using VxFormGenerator.Core.Layout;
 using VxFormGenerator.Core.Repository;
 
 namespace VxFormGenerator.Core
@@ -83,6 +84,8 @@ namespace VxFormGenerator.Core
         /// The property that should generate a formcontrol
         /// </summary>
         [Parameter] public string FieldIdentifier { get; set; }
+
+        [Parameter] public VxFormElementDefinition FormElementDefinition { get; set; }
         /// <summary>
         /// Updates the property with the new value
         /// </summary>

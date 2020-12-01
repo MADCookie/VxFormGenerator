@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using VxFormGenerator.Core;
 
-namespace VxFormGenerator.Render
+namespace VxFormGenerator.Render.Bootstrap
 {
 
-    public class BootstrapFormElementComponent<TFormElement> : FormElementBase<TFormElement>
+    public class VxBootstrapFormElementComponent<TFormElement> : FormElementBase<TFormElement>
     {
-        public BootstrapFormElementComponent()
+        public VxBootstrapFormElementComponent()
         {
             DefaultFieldClasses = new List<string>() { "form-control"};
             CssClasses = new List<string>() { "form-group", "row" };

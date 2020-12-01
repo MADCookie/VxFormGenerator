@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using System;
 using VxFormGenerator.Core;
-using VxFormGenerator.Form;
+using VxFormGenerator.Render;
 using VxFormGenerator.Render.Bootstrap;
 
 namespace VxFormGenerator.Settings.Bootstrap
@@ -21,7 +21,7 @@ namespace VxFormGenerator.Settings.Bootstrap
 
         public VxBootstrapFormOptions()
         {
-            FormElementComponent = typeof(BootstrapFormElement<>);
+            FormElementComponent = typeof(VxBootstrapFormElement<>);
             FormGroupElement = typeof(VxBootstrapFormGroupComponent);
             FieldCssClassProvider = new VxBootstrapFormCssClassProvider();
         }
